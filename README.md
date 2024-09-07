@@ -1,4 +1,4 @@
-Телеграм Бот для игры в ГВД. Для его запуска нужно
+Телеграм Бот для ГВД. Для его запуска нужно
 
 1. git clone https://github.com/dimasliva/hwm_bot.git
 2. pip install -r requirements.txt
