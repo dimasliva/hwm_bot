@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import random
 from app.variables import user
+
 import requests
 from PIL import Image
 from io import BytesIO

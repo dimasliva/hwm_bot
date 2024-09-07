@@ -1,22 +1,29 @@
-import asyncio
-
 from aiogram import Bot, Dispatcher
 from aiogram.client.session.aiohttp import AiohttpSession
 from app.handlers import router
+from app.user import setUserRegion, getUser
+from app.variables import user
+from app.database import db_start
 from dotenv import load_dotenv
 import os
+import asyncio
 
 
 async def main():
     load_dotenv()
-    # session = AiohttpSession(proxy="http://proxy.server:3128")
-
-    # bot = Bot(token=PROD_TOKEN, session=session)
     bot = Bot(token=os.getenv("BOT_TOKEN"))
     dp = Dispatcher()
     dp.include_router(router)
     print('Бот запущен')
+    status = db_start(user)
+    if status == 200:
+        await getUser()
+        await setUserRegion()
+    else:
+        print("user not authorization")
+
     await dp.start_polling(bot)
+    
 
 if __name__ == '__main__':
     try:

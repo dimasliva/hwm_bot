@@ -1,7 +1,8 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
-from app.variables import regions_btns, user
+from app.variables import regions_btns
 from app.regionFuncs import getRegionName
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardMarkup
+from app.variables import user
 
 main = ReplyKeyboardMarkup(keyboard=[
     [KeyboardButton(text='🕹️ Играть', web_app=WebAppInfo(url='https://www.heroeswm.ru/map.php'))],

@@ -7,7 +7,6 @@ class User:
         self.headers = headers
         self.rest_move_time = rest_move_time
 
-
 user = User('', '', '0', {}, {}, {})
 
 regions = [

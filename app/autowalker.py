@@ -1,5 +1,4 @@
 from app.regionFuncs import getRegionById
-from app.variables import user
 
 def getRegionBetween(region_one, region_two):
     around_region_two = []
@@ -78,26 +77,15 @@ def checkRegionIsAround(region, region_around):
      
 def checkSideIDAroundRegion(sideID, region_around):
     return (sideID in region_around) and (sideID != 0)
-     
-def getMinMaxCxXy(coord_one, coord_two):
-    if(coord_one > coord_two):
-        start_cx = coord_one
-        end_cx = coord_two
-    else:
-        start_cx = coord_two
-        end_cx = coord_one
-    print('coord_one', coord_one)
-    print('coord_two', coord_two)
-    print('[start_cx, end_cx]', [start_cx, end_cx])
-    return [start_cx, end_cx]
-def findRegionToMove(search_region):
-    condition_near_user = (search_region["moveLeft"] == user.region["id"]) or (search_region["moveRight"] == user.region["id"]) or (search_region["moveTop"] == user.region["id"]) or (search_region["moveBottom"] == user.region["id"])
+
+def findRegionToMove(search_region, from_region):
+    condition_near_user = (search_region["moveLeft"] == from_region["id"]) or (search_region["moveRight"] == from_region["id"]) or (search_region["moveTop"] == from_region["id"]) or (search_region["moveBottom"] == from_region["id"])
     if condition_near_user: 
         found_region = search_region
         return removeAdditionalRegions(search_region["name"], [found_region])
         
     else:
-        around_user = getRegionSides(user.region, True)
+        around_user = getRegionSides(from_region, True)
         condition_middle_region_around_user_search = checkRegionIsAround(search_region, around_user)
         
         if condition_middle_region_around_user_search:

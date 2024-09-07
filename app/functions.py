@@ -14,9 +14,9 @@ def getTimeMoveToRegion(count_region):
     formatted_time = new_time.strftime('%H:%M:%S')
     return formatted_time
     
-def getRegionsToMove(region_to_move_name):
+def getRegionsToMove(from_region, region_to_move_name):
     region_to_move = getRegionByName(region_to_move_name)
-    founded_regions = findRegionToMove(region_to_move)
+    founded_regions = findRegionToMove(region_to_move, from_region)
         
     print('founded regions: ')
     for region in founded_regions:

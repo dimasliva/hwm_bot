@@ -3,8 +3,11 @@ from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery, FSInputFile
 from app.keyboards import main, regions_keyboard, user_keyboard
 from app.user import setUser
-from app.variables import user, regions_btns
-from app.requests import getCurrentRegion, moveToRegion, toJob
+from app.variables import regions_btns
+from app.user import setUserRegion
+from app.variables import user
+
+from app.requests import moveToRegion, toJob
 from app.user import getUser
 
 from app.functions import getRegionsToMove, getTimeMoveToRegion
@@ -48,7 +51,6 @@ async def auth_handler(message: Message):
         await message.answer(f"Неверные данные.")
     else:
         await getUser()
-        await getCurrentRegion()
         await message.answer(f"Вход успешен!", reply_markup=user_keyboard)
 
 
@@ -56,12 +58,13 @@ async def auth_handler(message: Message):
 async def on_regions_to_move(callback: CallbackQuery):
     await callback.answer()
     await callback.message.answer(f"Герой отправился в {callback.data}")
-    regions_for_move = getRegionsToMove(callback.data)
+    regions_for_move = getRegionsToMove(user.region, callback.data)
     total_time = getTimeMoveToRegion(len(regions_for_move))
     user.rest_move_time = total_time
     await callback.message.answer(f"Время прибытия: {user.rest_move_time}")
     await moveToRegion(callback.data, regions_for_move)
     await callback.message.answer(f"Герой прибыл!")
+
 
 
 # @router.callback_query(F.data == 'AuthNo')
@@ -72,5 +75,5 @@ async def on_regions_to_move(callback: CallbackQuery):
 
 @router.message(Command('location'))
 async def location(message: Message):
-    region = await getCurrentRegion()
+    region = user.region
     await message.answer(region)

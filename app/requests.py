@@ -1,5 +1,6 @@
 import requests
 from app.variables import user
+
 from app.functions import getRegionByName
 from app.jobs import getJob, getSuccessJob
 from app.regionFuncs import getRegionName
@@ -7,28 +8,6 @@ from bs4 import BeautifulSoup
 import random
 from decimal import Decimal, getcontext
 import time
-
-
-async def getCurrentRegion():
-    params = {
-        'id': f'{user.id}'
-    }
-    res = requests.get('https://www.heroeswm.ru/pl_info.php',
-                       params=params, cookies=user.cookies, headers=user.headers)
-    soup = BeautifulSoup(res.text, 'lxml')
-    tds = soup.find_all('td', colspan="2")
-    links = soup.find_all('a', href=True)
-    region_name = ""
-    for td in tds:
-        links = td.find_all("a", href=True)
-        for link in links:
-            if link["href"].split('?')[0] == "map.php":
-                region_name = link.text
-                user.region = getRegionByName(region_name)
-                break
-
-    return region_name
-
 
 
 
