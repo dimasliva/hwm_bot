@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import random
 from decimal import Decimal, getcontext
 import time
+from datetime import datetime, timedelta
 
 
 
@@ -19,9 +20,22 @@ async def toJob():
     #Производство 'sh',
 
     res = await getSuccessJob('sh')
-    print('res', res)     
+    print('toJob res', res)   
+    return 200  
 
+def getJobTimer():
+    # Получаем текущее время
+    now = datetime.now()
 
+    # Создаем временной интервал для добавления (1 час и 10 секунд)
+    delta = timedelta(hours=1, seconds=10)
+
+    # Добавляем интервал к текущему времени
+    new_time = now + delta
+
+    # Форматируем полученное время в HH:MM:SS
+    formatted_time = new_time.strftime('%H:%M:%S')
+    return formatted_time
 
 async def moveToRegion(region_to_move, regions_for_move):
     for region in regions_for_move:

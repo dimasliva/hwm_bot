@@ -7,7 +7,7 @@ from app.variables import regions_btns
 from app.user import setUserRegion
 from app.variables import user
 
-from app.requests import moveToRegion, toJob
+from app.requests import moveToRegion, toJob, getJobTimer
 from app.user import getUser
 
 from app.functions import getRegionsToMove, getTimeMoveToRegion
@@ -36,9 +36,14 @@ async def on_how_to_join(message: Message):
     await message.answer_photo(photo=FSInputFile(path='./app/images/Guide_4.png'))
     
 @router.message(lambda message: message.text == "⛏️ Работать")
-async def on_job(message: Message):
-    await toJob()
-    await message.answer(f"Вы строились на работу!")
+async def do_job(message: Message):
+    status = await toJob()
+    if status == 200:
+        time = getJobTimer()
+        await message.answer(f"Работа началась! Конец смены: {time}")
+    else:
+        await message.answer("Не удалось устроиться на работу")
+        
 
 @router.message(lambda message: message.text == "🚗 Сменить регион")
 async def on_how_to_join(message: Message):

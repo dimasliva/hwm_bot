@@ -17,7 +17,7 @@ def add_user_table(headers, cookies):
     exists = check_if_user_exists(cookies)
 
     if exists:
-        print("user exists")
+        print("table user exists")
     else:
         remove_user_table()
         # Insert data into the table
@@ -25,7 +25,6 @@ def add_user_table(headers, cookies):
         INSERT INTO users (headers, cookies)
         VALUES (?, ?)
         ''', (str(headers), str(cookies)))
-    print()
     conn.commit()
 
     # Fetch the result
@@ -57,7 +56,6 @@ def set_user(user):
 def db_start(user):
 
     users_exists = check_table_exists('users')
-    print("users_exists", users_exists)
     if users_exists == False:
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (
