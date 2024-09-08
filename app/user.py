@@ -119,3 +119,5 @@ async def getUser():
                 return 200
         else:
             return 500
+    else:
+        return 500

@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 from aiogram.client.session.aiohttp import AiohttpSession
 from app.handlers import router
-from app.user import setUserRegion, getUser
+from app.user import getUser
 from app.variables import user
 from app.database import db_start
 from dotenv import load_dotenv
@@ -17,7 +17,9 @@ async def main():
     print('Бот запущен')
     status = db_start(user)
     if status == 200:
-        await getUser()
+        status_user = await getUser()
+        if status_user == 500:
+            print("user not authorization")
     else:
         print("user not authorization")
 

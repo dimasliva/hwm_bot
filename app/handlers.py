@@ -38,6 +38,7 @@ async def on_how_to_join(message: Message):
 @router.message(lambda message: message.text == "⛏️ Работать")
 async def do_job(message: Message):
     status = await toJob()
+    print("do_job status", status)
     if status == 200:
         time = getJobTimer()
         await message.answer(f"Работа началась! Конец смены: {time}")
