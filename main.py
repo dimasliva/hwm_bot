@@ -18,7 +18,6 @@ async def main():
     status = db_start(user)
     if status == 200:
         await getUser()
-        await setUserRegion()
     else:
         print("user not authorization")
 

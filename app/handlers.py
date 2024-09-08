@@ -64,11 +64,14 @@ async def on_regions_to_move(callback: CallbackQuery):
     await callback.answer()
     await callback.message.answer(f"Герой отправился в {callback.data}")
     regions_for_move = getRegionsToMove(user.region, callback.data)
-    total_time = getTimeMoveToRegion(len(regions_for_move))
-    user.rest_move_time = total_time
-    await callback.message.answer(f"Время прибытия: {user.rest_move_time}")
-    await moveToRegion(callback.data, regions_for_move)
-    await callback.message.answer(f"Герой прибыл!")
+    if regions_for_move == 500:
+        await callback.message.answer(f"Не удалось начать путь в: {callback.data}")
+    else:
+        total_time = getTimeMoveToRegion(len(regions_for_move))
+        user.rest_move_time = total_time
+        await callback.message.answer(f"Время прибытия: {user.rest_move_time}")
+        await moveToRegion(callback.data, regions_for_move)
+        await callback.message.answer(f"Герой прибыл!")
 
 
 

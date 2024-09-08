@@ -32,6 +32,7 @@ async def setUserRegion():
                 if link["href"].split('?')[0] == "map.php":
                     region_name = link.text
                     user.region = getRegionByName(region_name)
+                    print("user.region", user.region)
                     break
 
 def setUser(text):
@@ -109,7 +110,6 @@ async def getUser():
                 print('learnRules not working')
                 return 500
             else:
-                print("user.cookies", user.cookies)
                 soup = BeautifulSoup(resp.text, 'lxml')
                 a = soup.find_all("a", class_="pi", href=True)[0]
                 user.href = a['href']

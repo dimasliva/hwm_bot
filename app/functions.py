@@ -16,11 +16,16 @@ def getTimeMoveToRegion(count_region):
     
 def getRegionsToMove(from_region, region_to_move_name):
     region_to_move = getRegionByName(region_to_move_name)
-    founded_regions = findRegionToMove(region_to_move, from_region)
-        
-    print('founded regions: ')
-    for region in founded_regions:
-        print('region', region)
-    
-    return founded_regions
+    if region_to_move == None:
+        return 500
+    else:
+        print("region_to_move", region_to_move)
+        print("from_region", from_region)
+        founded_regions = findRegionToMove(region_to_move, from_region)
+
+        print('founded regions: ')
+        for region in founded_regions:
+            print('region', region)
+
+        return founded_regions
     

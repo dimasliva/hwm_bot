@@ -107,7 +107,7 @@ regions_btns = [
     'Magma Mines',
     'Bear Mountain',
     'Fairy Trees',
-    'Harbor City',
+    'Harbour City',
     'Mithril Coast',
     'The Great Wall',
     "Titans's Valley",
