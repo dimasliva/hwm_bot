@@ -45,12 +45,6 @@ async def jobDo(job_id):
     }
     response = requests.post('https://www.heroeswm.ru/object_do.php', cookies=user.cookies, headers=user.headers, data=data)
     if response.status_code == 200:
-        delay = 3600 + 10
-        timer = threading.Timer(delay, await getSuccessJob('sh'))
-        timer.start()
-        # Ожидаем завершения таймера
-        timer.join()
-        print("jobDo success")
         return 200
     
 async def getJobBtn(html, job_id):
@@ -114,12 +108,16 @@ async def getJobs(html):
     else: 
         return False
     
-async def getSuccessJob(work_type): 
+async def doJob(work_type): 
     html = await jobsRequests(work_type)
-    res = await getJobs(html)
-    if res == False:
-        if work_type == 'sh':
-            await getSuccessJob('fc')
-        elif work_type == 'fc':
-            await getSuccessJob('mn')
-    return res
+    status = await getJobs(html)
+    if status == 200:
+        return status
+    elif status == 500:
+        return 500
+    else:
+        if status == False:
+            if work_type == 'sh':
+                await doJob('fc')
+            elif work_type == 'fc':
+                await doJob('mn')

@@ -2,26 +2,33 @@ import requests
 from app.variables import user
 
 from app.functions import getRegionByName
-from app.jobs import getJob, getSuccessJob
+from app.jobs import getJob, doJob
 from app.regionFuncs import getRegionName
 from bs4 import BeautifulSoup
 import random
 from decimal import Decimal, getcontext
 import time
 from datetime import datetime, timedelta
+import asyncio
 
 
-
-
-        
-async def toJob():
+async def startJob():
     #Добыча 'mn',
     #Обработка 'fc',
     #Производство 'sh',
+    print("startJob")
 
-    res = await getSuccessJob('sh')
-    print('toJob res', res)   
-    return 200  
+    status = await doJob('sh')
+    print('startJob status', status)   
+    if status == None:
+        return 200  
+        
+async def toJob():
+    status = await startJob()
+    if status == None:
+        delay = 1 * 60 * 60 + 10  # 1 час = 3600 секунд, 10 секунд = 10
+        await asyncio.sleep(delay)
+        await toJob()
 
 def getJobTimer():
     # Получаем текущее время
